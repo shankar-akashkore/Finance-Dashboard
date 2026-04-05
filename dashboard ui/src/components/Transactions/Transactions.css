@@ -200,6 +200,10 @@
   border-collapse: collapse;
 }
 
+.transactions__mobile-list {
+  display: none;
+}
+
 .transactions__table thead {
   background: rgba(255, 255, 255, 0.03);
   border-bottom: 1px solid var(--border);
@@ -350,6 +354,56 @@
   background: rgba(255, 123, 114, 0.12);
   color: var(--danger);
   border-color: var(--danger);
+}
+
+.transactions__mobile-card {
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.transactions__mobile-card:last-child {
+  border-bottom: none;
+}
+
+.transactions__mobile-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.transactions__mobile-amount-wrap,
+.transactions__mobile-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.transactions__mobile-amount-wrap {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.transactions__mobile-meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.transactions__mobile-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.transactions__mobile-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
 }
 
 .transactions__empty {
@@ -525,6 +579,11 @@
     flex-direction: column;
   }
 
+  .transactions__actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
   .filters__row {
     flex-direction: column;
     align-items: stretch;
@@ -542,20 +601,42 @@
     flex-wrap: wrap;
   }
 
-  .transactions__table {
-    font-size: 0.82rem;
-  }
-
-  .transactions__table th,
-  .transactions__table td {
-    padding: 10px 12px;
-  }
-
   .transaction-form__row {
     grid-template-columns: 1fr;
   }
 
   .transactions__export {
     display: none;
+  }
+
+  .transactions__table {
+    display: none;
+  }
+
+  .transactions__mobile-list {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 560px) {
+  .transactions__actions,
+  .transactions__mobile-top,
+  .transactions__mobile-meta {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .transactions__mobile-amount-wrap {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .transactions__actions {
+    align-items: stretch;
+  }
+
+  .transactions__actions .btn {
+    justify-content: center;
   }
 }

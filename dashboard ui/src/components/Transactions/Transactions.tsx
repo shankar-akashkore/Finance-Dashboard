@@ -63,21 +63,79 @@ export default function Transactions() {
             <p>Try adjusting your filters or add a new transaction.</p>
           </div>
         ) : (
-          <table className="transactions__table" id="transactions-table">
-            <thead>
-              <tr>
-                <th>Transaction</th>
-                <th>Category</th>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Status</th>
-                {isAdmin && <th>Actions</th>}
-              </tr>
-            </thead>
-            <tbody>
+          <>
+            <table className="transactions__table" id="transactions-table">
+              <thead>
+                <tr>
+                  <th>Transaction</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  {isAdmin && <th>Actions</th>}
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.map((t) => (
+                  <tr key={t.id} className="transactions__row">
+                    <td>
+                      <div className="transactions__cell-main">
+                        <div className={`transactions__type-icon transactions__type-icon--${t.type}`}>
+                          {t.type === 'income' ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
+                        </div>
+                        <div>
+                          <span className="transactions__desc">{t.description}</span>
+                          <span className="transactions__type-label">{t.type}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span className="transactions__category">{t.category}</span>
+                    </td>
+                    <td>
+                      <span className="transactions__date">{formatDate(t.date)}</span>
+                    </td>
+                    <td>
+                      <span className={`transactions__amount transactions__amount--${t.type}`}>
+                        {t.type === 'income' ? '+' : '-'}{formatCurrency(t.amount)}
+                      </span>
+                    </td>
+                    <td>
+                      <span className={`transactions__status transactions__status--${t.status}`}>
+                        {t.status}
+                      </span>
+                    </td>
+                    {isAdmin && (
+                      <td>
+                        <div className="transactions__actions-cell">
+                          <button
+                            className="transactions__action-btn"
+                            onClick={() => handleEdit(t)}
+                            title="Edit"
+                            aria-label={`Edit ${t.description}`}
+                          >
+                            <Edit3 size={14} />
+                          </button>
+                          <button
+                            className="transactions__action-btn transactions__action-btn--delete"
+                            onClick={() => handleDelete(t.id)}
+                            title="Delete"
+                            aria-label={`Delete ${t.description}`}
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div className="transactions__mobile-list">
               {filtered.map((t) => (
-                <tr key={t.id} className="transactions__row">
-                  <td>
+                <article className="transactions__mobile-card" key={`${t.id}-mobile`}>
+                  <div className="transactions__mobile-top">
                     <div className="transactions__cell-main">
                       <div className={`transactions__type-icon transactions__type-icon--${t.type}`}>
                         {t.type === 'income' ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
@@ -87,49 +145,55 @@ export default function Transactions() {
                         <span className="transactions__type-label">{t.type}</span>
                       </div>
                     </div>
-                  </td>
-                  <td>
-                    <span className="transactions__category">{t.category}</span>
-                  </td>
-                  <td>
-                    <span className="transactions__date">{formatDate(t.date)}</span>
-                  </td>
-                  <td>
-                    <span className={`transactions__amount transactions__amount--${t.type}`}>
-                      {t.type === 'income' ? '+' : '-'}{formatCurrency(t.amount)}
-                    </span>
-                  </td>
-                  <td>
-                    <span className={`transactions__status transactions__status--${t.status}`}>
-                      {t.status}
-                    </span>
-                  </td>
+                    <div className="transactions__mobile-amount-wrap">
+                      <span className="transactions__mobile-label">Amount</span>
+                      <span className={`transactions__amount transactions__amount--${t.type}`}>
+                        {t.type === 'income' ? '+' : '-'}{formatCurrency(t.amount)}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="transactions__mobile-meta">
+                    <div className="transactions__mobile-meta-item">
+                      <span className="transactions__mobile-label">Category</span>
+                      <span className="transactions__category">{t.category}</span>
+                    </div>
+                    <div className="transactions__mobile-meta-item">
+                      <span className="transactions__mobile-label">Date</span>
+                      <span className="transactions__date">{formatDate(t.date)}</span>
+                    </div>
+                    <div className="transactions__mobile-meta-item">
+                      <span className="transactions__mobile-label">Status</span>
+                      <span className={`transactions__status transactions__status--${t.status}`}>
+                        {t.status}
+                      </span>
+                    </div>
+                  </div>
+
                   {isAdmin && (
-                    <td>
-                      <div className="transactions__actions-cell">
-                        <button
-                          className="transactions__action-btn"
-                          onClick={() => handleEdit(t)}
-                          title="Edit"
-                          aria-label={`Edit ${t.description}`}
-                        >
-                          <Edit3 size={14} />
-                        </button>
-                        <button
-                          className="transactions__action-btn transactions__action-btn--delete"
-                          onClick={() => handleDelete(t.id)}
-                          title="Delete"
-                          aria-label={`Delete ${t.description}`}
-                        >
-                          <Trash2 size={14} />
-                        </button>
-                      </div>
-                    </td>
+                    <div className="transactions__mobile-actions">
+                      <button
+                        className="transactions__action-btn"
+                        onClick={() => handleEdit(t)}
+                        title="Edit"
+                        aria-label={`Edit ${t.description}`}
+                      >
+                        <Edit3 size={14} />
+                      </button>
+                      <button
+                        className="transactions__action-btn transactions__action-btn--delete"
+                        onClick={() => handleDelete(t.id)}
+                        title="Delete"
+                        aria-label={`Delete ${t.description}`}
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
                   )}
-                </tr>
+                </article>
               ))}
-            </tbody>
-          </table>
+            </div>
+          </>
         )}
       </div>
     </div>

@@ -306,8 +306,13 @@
     padding: 20px;
   }
 
+  .executive-overview__headline h2 {
+    max-width: 100%;
+    font-size: clamp(1.8rem, 10vw, 2.6rem);
+  }
+
   .executive-overview__metrics {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .executive-overview__panel-header,
@@ -316,6 +321,24 @@
   }
 
   .dashboard__bottom {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .dashboard {
+    gap: 18px;
+  }
+
+  .executive-overview {
+    gap: 16px;
+  }
+
+  .executive-overview__headline p {
+    font-size: 0.9rem;
+  }
+
+  .executive-overview__metrics {
     grid-template-columns: 1fr;
   }
 }

@@ -56,11 +56,11 @@
 
 @media (max-width: 768px) {
   .app__main {
-    margin-left: 72px;
+    margin-left: 0;
   }
 
   .app__content {
-    padding: 20px 16px;
+    padding: 20px 16px 108px;
   }
 
   .app__content::before {

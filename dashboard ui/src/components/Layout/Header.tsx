@@ -1,9 +1,9 @@
 import { useAppContext } from '../../context/AppContext';
-import { Bell, Search, CalendarDays, ChevronRight } from 'lucide-react';
+import { Bell, Search, CalendarDays, ChevronRight, Moon, Sun } from 'lucide-react';
 import './Header.css';
 
 export default function Header() {
-  const { state } = useAppContext();
+  const { state, dispatch } = useAppContext();
 
   const getGreeting = (): string => {
     const hour = new Date().getHours();
@@ -51,6 +51,14 @@ export default function Header() {
           <CalendarDays size={16} />
           <span>Monthly review</span>
           <ChevronRight size={14} />
+        </button>
+        <button
+          className="header__theme-toggle"
+          onClick={() => dispatch({ type: 'SET_THEME', payload: state.theme === 'dark' ? 'light' : 'dark' })}
+          aria-label={`Switch to ${state.theme === 'dark' ? 'light' : 'dark'} mode`}
+          title={`Switch to ${state.theme === 'dark' ? 'light' : 'dark'} mode`}
+        >
+          {state.theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
         </button>
         <button className="header__notification" id="notification-btn" aria-label="Notifications">
           <Bell size={18} />
