@@ -4,10 +4,12 @@ import Header from './components/Layout/Header';
 import Dashboard from './components/Dashboard/Dashboard';
 import Transactions from './components/Transactions/Transactions';
 import Insights from './components/Insights/Insights';
+import { useState } from 'react';
 import './App.css';
 
 function AppContent() {
   const { state } = useAppContext();
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const renderView = () => {
     switch (state.activeView) {
@@ -23,8 +25,8 @@ function AppContent() {
   };
 
   return (
-    <div className="app">
-      <Sidebar />
+    <div className={`app ${sidebarCollapsed ? 'app--collapsed' : ''}`}>
+      <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed((prev) => !prev)} />
       <div className="app__main">
         <Header />
         <main className="app__content" id="main-content">

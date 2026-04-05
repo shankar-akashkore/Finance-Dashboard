@@ -10,13 +10,17 @@ import {
   ChevronLeft,
   ChevronRight,
   Wallet,
+  Sparkles,
 } from 'lucide-react';
-import { useState } from 'react';
 import './Sidebar.css';
 
-export default function Sidebar() {
+interface SidebarProps {
+  collapsed: boolean;
+  onToggle: () => void;
+}
+
+export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const { state, dispatch } = useAppContext();
-  const [collapsed, setCollapsed] = useState(false);
 
   const navItems = [
     { id: 'dashboard' as const, label: 'Dashboard', icon: LayoutDashboard },
@@ -31,11 +35,19 @@ export default function Sidebar() {
           <div className="sidebar__logo-icon">
             <Wallet size={22} />
           </div>
-          {!collapsed && <span className="sidebar__logo-text">FinVault</span>}
+          {!collapsed && (
+            <div className="sidebar__logo-copy">
+              <span className="sidebar__logo-text">FinVault</span>
+              <span className="sidebar__logo-badge">
+                <Sparkles size={12} />
+                Prime
+              </span>
+            </div>
+          )}
         </div>
         <button
           className="sidebar__toggle"
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={onToggle}
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
@@ -43,6 +55,7 @@ export default function Sidebar() {
       </div>
 
       <nav className="sidebar__nav">
+        {!collapsed && <p className="sidebar__section-label">Workspace</p>}
         {navItems.map((item) => (
           <button
             key={item.id}
@@ -59,6 +72,13 @@ export default function Sidebar() {
       </nav>
 
       <div className="sidebar__footer">
+        {!collapsed && (
+          <div className="sidebar__premium-card">
+            <span className="sidebar__premium-label">Portfolio Health</span>
+            <strong className="sidebar__premium-value">Stable</strong>
+            <p className="sidebar__premium-copy">Cash flow is ahead of expense trend this month.</p>
+          </div>
+        )}
         {/* Role Toggle */}
         <div className="sidebar__role-toggle" title={collapsed ? `Role: ${state.role}` : undefined}>
           <div className="sidebar__role-icon">

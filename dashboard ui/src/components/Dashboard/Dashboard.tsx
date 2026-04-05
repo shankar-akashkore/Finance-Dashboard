@@ -2,11 +2,13 @@ import SummaryCards from './SummaryCards';
 import BalanceTrend from './BalanceTrend';
 import SpendingBreakdown from './SpendingBreakdown';
 import RecentTransactions from './RecentTransactions';
+import ExecutiveOverview from './ExecutiveOverview';
 import './Dashboard.css';
 
 export default function Dashboard() {
   return (
     <div className="dashboard" id="dashboard-view">
+      <ExecutiveOverview />
       <SummaryCards />
       <div className="dashboard__charts">
         <BalanceTrend />
